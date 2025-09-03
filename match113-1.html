@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>A8_Sec12_23301128_Sadman-Shabab.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec24_23301498_Nusrat-Tabassum-Mim.txt<p></p><pre>
+﻿#labtask1:
+class MinHeap:
+    def __init__(self, capacity):
+        self.__capacity = capacity
+        self.__heap = [None] * (capacity + 1)
+        self.__size = 0
+
+
+<a name="2"></a><font color="#0000FF"><a href="match113-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+    def insert(self, data):
+        if self.__size &gt;= self.__capacity:
+            return False
+        self.__size += 1
+        self.__heap[self.__size] = data
+        self.__swim(self.__size)
+</font>        return True
+
+
+    def __swim(self, index):
+        while index &gt; 1 and self.__heap[index] &lt; self.__heap[index // 2]:
+            self.__heap[index], self.__heap[index//2] = self.__heap[index//2], self.__heap[index]
+            index //= 2
+
+
+    def extractMin(self):
+        if self.__size == 0:
+            return False
+<a name="5"></a><font color="#FF0000"><a href="match113-0.html#5" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_3.gif"/></a>
+
+        min_val = self.__heap[1]
+        self.__heap[1] = self.__heap[self.__size]
+        self.__size -= 1
+        self.__sink()
+</font>        return min_val
+
+
+    def __sink(self, i=1):
+        left_child = 2 * i
+        right_child = 2 * i + 1
+        smallest = i
+<a name="1"></a><font color="#00FF00"><a href="match113-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_5.gif"/></a>
+
+        if left_child &lt;= self.__size and self.__heap[left_child] &lt; self.__heap[smallest]:
+            smallest = left_child
+        if right_child &lt;= self.__size and self.__heap[right_child] &lt; self.__heap[smallest]:
+</font>            smallest = right_child
+        if smallest != i:
+<a name="6"></a><font color="#00FF00"><a href="match113-0.html#6" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_3.gif"/></a>
+
+            self.__heap[i], self.__heap[smallest] = self.__heap[smallest], self.__heap[i]
+            self.__sink(smallest)
+</font>
+
+    def sort(self):
+        a=self.__heap
+        sorted_array = [None] * self.__size
+        sorted_index = 0
+        original_size = self.__size
+        for _ in range(original_size):
+            min_val = self.extractMin()
+            if min_val :
+                sorted_array[sorted_index] = min_val
+                sorted_index += 1
+        self.__heap=a
+        return sorted_array
+
+
+#labtask2
+class MaxHeap:
+    def __init__(self, capacity):
+        self.__capacity = capacity
+        self.__heap = [None] * (capacity+1)
+        self.__size = 0
+
+
+<a name="3"></a><font color="#00FFFF"><a href="match113-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+    def insert(self, data):
+        if self.__size &gt;= self.__capacity:
+            return False
+        self.__size += 1
+        self.__heap[self.__size] = data
+        self.__swim(self.__size)
+</font>
+
+    def __swim(self, index):
+        while index&gt;1 and self.__heap[index] &gt; self.__heap[index//2]:
+            self.__heap[index], self.__heap[index//2] = self.__heap[index//2], self.__heap[index]
+            index = index // 2
+
+
+    def extractMax(self):
+        if self.__size == 0:
+            return False
+<a name="7"></a><font color="#0000FF"><a href="match113-0.html#7" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+        max = self.__heap[1]
+        self.__heap[1] = self.__heap[self.__size]
+        self.__size -= 1
+        self.__sink()
+</font>        return max
+
+
+    def __sink(self, i=1):
+        l_child = 2*i
+        r_child = 2*i + 1
+<a name="0"></a><font color="#FF0000"><a href="match113-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_5.gif"/></a>
+
+        largest = i
+        if l_child &lt;= self.__size and self.__heap[l_child] &gt; self.__heap[largest]:
+            largest = l_child
+        if r_child &lt;= self.__size and self.__heap[r_child] &gt; self.__heap[largest]:
+            largest = r_child
+</font>        if largest != i:
+<a name="8"></a><font color="#00FFFF"><a href="match113-0.html#8" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+            self.__heap[i], self.__heap[largest] = self.__heap[largest], self.__heap[i]
+            self.__sink(largest)
+</font>
+
+
+
+    def sort(self):
+        result = [None] * self.__capacity
+        sorted_index,original_size = 0 , self.__size
+        while self.__size &gt; 0:
+            max_val = self.extractMax()
+            if max_val:
+                result[sorted_index] = max_val
+                sorted_index += 1
+            else:
+                break
+        self.__size = original_size
+        self.__heap =result
+        return result
+
+
+#assignment task 3
+def schedule_tasks(m, tasks):
+    min_heap = MinHeap(m)
+    i=0
+    while i&lt;m:
+        i+=1
+        min_heap.insert(0)
+    for el in tasks:
+        ext = min_heap.extractMin()
+        if ext is not None:
+            min_heap.insert(ext + el)
+
+
+    return min_heap.sort()
+
+
+m = 4
+tasks = [2, 4, 7, 1, 6]
+result = schedule_tasks(m, tasks)
+print(result)
+
+
+#task4
+def find_top(nums, k):
+    max_heap = MaxHeap(len(nums))
+    for el in nums:
+<a name="4"></a><font color="#FF00FF"><a href="match113-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+        max_heap.insert(el)
+    arr = [0]*k
+    for i in range(k):
+        arr[i] = max_heap.extractMax()
+    return arr
+
+
+
+
+
+
+num = [4, 10, 2, 8, 6, 7]
+</font>k = 3
+print(find_top(num, k))</pre>
+</body>
+</html>

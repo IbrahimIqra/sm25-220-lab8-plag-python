@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>A8_Sec25_23141004_Ahammad-Ha-meem-Safwat-.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec25_23141004_Ahammad-Ha-meem-Safwat-.txt<p></p><pre>
+#task 3
+class MinHeap:
+    def __init__(self,size):
+        self.__limit=size
+        self.__heap=[0]*size
+        self.__count=0
+    def Insert(self,val):
+        if self.__count==self.__limit:
+            return
+        self.__heap[self.__count]=val
+        self.__count+=1
+        self.ShiftUp(self.__count-1)
+<a name="0"></a><font color="#FF0000"><a href="match34-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_9.gif"/></a>
+
+    def ShiftUp(self,idx):
+        while idx&gt;0:
+            parent=(idx-1)//2
+            if self.__heap[idx]&lt;self.__heap[parent]:
+                t=self.__heap[idx]
+                self.__heap[idx]=self.__heap[parent]
+                self.__heap[parent]=t
+                idx=parent
+            else:
+                break
+    def extractMin(self):
+</font>        if self.__count==0:
+            return None
+<a name="5"></a><font color="#FF0000"><a href="match34-1.html#5" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_4.gif"/></a>
+
+        m=self.__heap[0]
+        self.__heap[0]=self.__heap[self.__count-1]
+        self.__count-=1
+        self.ShiftDown(0)
+        return m
+</font>    def ShiftDown(self,idx):
+        while (2*idx+1)&lt;self.__count:
+            left=2*idx+1
+<a name="8"></a><font color="#00FFFF"><a href="match34-1.html#8" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+            right=left+1
+            s=left
+            if right&lt;self.__count and self.__heap[right]&lt;self.__heap[left]:
+                s=right
+</font>            if self.__heap[s]&lt;self.__heap[idx]:
+<a name="3"></a><font color="#00FFFF"><a href="match34-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+                t=self.__heap[idx]
+                self.__heap[idx]=self.__heap[s]
+                self.__heap[s]=t
+                idx=s
+            else:
+                break
+
+def assign_tasks(tasks,m):
+</font>    if m&lt;=0:
+        return []
+    h=MinHeap(m)
+    i=0
+    while i&lt;m:
+        h.Insert(0)
+        i+=1
+    j=0
+    n=len(tasks)
+    while j&lt;n:
+        x=h.extractMin()
+        if x is None:
+            x=0
+        x=x+tasks[j]
+        h.Insert(x)
+        j+=1
+    res=[0]*m
+    k=0
+    while k&lt;m:
+        t=h.extractMin()
+        if t is None:
+            t=0
+        res[k]=t
+        k+=1
+    return res
+
+
+
+
+
+
+#task4
+class MaxHeap:
+    def __init__(self,size):
+        self.__limit=size
+        self.__heap=[0]*size
+        self.__count=0
+    def Insert(self,val):
+        if self.__count==self.__limit:
+            return
+        self.__heap[self.__count]=val
+        self.__count+=1
+        self.ShiftUp(self.__count-1)
+<a name="1"></a><font color="#00FF00"><a href="match34-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_9.gif"/></a>
+
+    def ShiftUp(self,idx):
+        while idx&gt;0:
+            parent=(idx-1)//2
+            if self.__heap[idx]&gt;self.__heap[parent]:
+                t=self.__heap[idx]
+                self.__heap[idx]=self.__heap[parent]
+                self.__heap[parent]=t
+                idx=parent
+            else:
+                break
+    def extractMax(self):
+</font>        if self.__count==0:
+            return None
+<a name="6"></a><font color="#00FF00"><a href="match34-1.html#6" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_4.gif"/></a>
+
+        m=self.__heap[0]
+        self.__heap[0]=self.__heap[self.__count-1]
+        self.__count-=1
+        self.ShiftDown(0)
+        return m
+</font>    def ShiftDown(self,idx):
+        while (2*idx+1)&lt;self.__count:
+            left=2*idx+1
+<a name="7"></a><font color="#0000FF"><a href="match34-1.html#7" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+            right=left+1
+            l=left
+            if right&lt;self.__count and self.__heap[right]&gt;self.__heap[left]:
+                l=right
+            if self.__heap[l]&gt;self.__heap[idx]:
+</font><a name="4"></a><font color="#FF00FF"><a href="match34-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_4.gif"/></a>
+
+                t=self.__heap[idx]
+                self.__heap[idx]=self.__heap[l]
+                self.__heap[l]=t
+                idx=l
+            else:
+                break
+
+def top_k_largest(nums,k):
+</font>    n=len(nums)
+<a name="2"></a><font color="#0000FF"><a href="match34-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_6.gif"/></a>
+
+    h=MaxHeap(n)
+    i=0
+    while i&lt;n:
+        h.Insert(nums[i])
+        i+=1
+    res=[0]*k
+    j=0
+    while j&lt;k:
+        res[j]=h.extractMax()
+        j+=1
+    return resS</font></pre>
+</body>
+</html>

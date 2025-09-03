@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>A8_sec05_22201732_PUSPITA-BANIK---PUSPITA-BANIK.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_sec05_22201732_PUSPITA-BANIK---PUSPITA-BANIK.txt<p></p><pre>
+﻿Task 3:
+class MinHeap:
+    def __init__(self, c):
+        self.__c = c
+        self.__heap = [0] * c
+        self.__size = 0
+
+
+    def insert(self, value):
+        if self.__size &gt;= self.__c:
+            return
+        self.__heap[self.__size] = value
+        self.swim(self.__size)
+        self.__size += 1
+
+
+    def swim(self, idx):
+        while idx &gt; 0:
+            prnt = (idx - 1) // 2
+            if self.__heap[idx] &lt; self.__heap[prnt]:
+                self.__heap[idx], self.__heap[prnt] = self.__heap[prnt], self.__heap[idx]
+                idx = prnt
+            else:
+                break
+
+
+    def extractMin(self):
+        if self.__size == 0:
+            return -1
+        min_val = self.__heap[0]
+        self.__size -= 1
+        self.__heap[0] = self.__heap[self.__size]
+        self.sink(0)
+        return min_val
+
+
+    def sink(self, idx):
+<a name="3"></a><font color="#00FFFF"><a href="match132-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+        while 2 * idx + 1 &lt; self.__size:
+            l = 2 * idx + 1
+            r = 2 * idx + 2
+            small = l
+            if r &lt; self.__size and self.__heap[r] &lt; self.__heap[l]:
+                small = r
+</font><a name="2"></a><font color="#0000FF"><a href="match132-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+            if self.__heap[idx] &gt; self.__heap[small]:
+                temp = self.__heap[idx]
+                self.__heap[idx] = self.__heap[small]
+                self.__heap[small] = temp
+                idx = small
+            else:
+                break
+
+
+    def get_heap(self):
+</font>        return sorted(self.__heap[:self.__size])
+
+
+
+
+def distribute_tasks(tasks, m):
+    min_heap = MinHeap(m)
+
+
+    for _ in range(m):
+        min_heap.insert(0)
+
+
+
+
+    for task in tasks:
+        min_load = min_heap.extractMin()
+        min_load += task
+        min_heap.insert(min_load)
+
+
+
+
+    return min_heap.get_heap()
+
+
+
+
+tasks = [2, 4, 7, 1, 6]
+m = 4
+print("Final machine loads:", distribute_tasks(tasks, m))
+
+
+
+
+
+
+
+
+
+
+
+
+
+Task 4:
+class MaxHeap:
+    def __init__(self, c):
+        self.__c = c
+        self.__heap = [0] * c
+        self.__size = 0
+
+
+    def insert(self, value):
+        if self.__size &gt;= self.__c:
+            return
+        self.__heap[self.__size] = value
+        self.swim(self.__size)
+        self.__size += 1
+
+
+<a name="0"></a><font color="#FF0000"><a href="match132-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_7.gif"/></a>
+
+    def swim(self, idx):
+        while idx &gt; 0:
+            prnt = (idx - 1) // 2
+            if self.__heap[idx] &gt; self.__heap[prnt]:
+                temp = self.__heap[idx]
+                self.__heap[idx] = self.__heap[prnt]
+                self.__heap[prnt] = temp
+                idx = prnt
+            else:
+                break
+
+
+    def extractMax(self):
+</font>        if self.__size == 0:
+            return -1
+        max_val = self.__heap[0]
+        self.__size -= 1
+        self.__heap[0] = self.__heap[self.__size]
+        self.sink(0)
+        return max_val
+
+
+    def sink(self, idx):
+<a name="1"></a><font color="#00FF00"><a href="match132-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_5.gif"/></a>
+
+        while 2 * idx + 1 &lt; self.__size:
+            l = 2 * idx + 1
+            r = 2 * idx + 2
+            large = l
+            if r &lt; self.__size and self.__heap[r] &gt; self.__heap[l]:
+                large = r
+            if self.__heap[idx] &lt; self.__heap[large]:
+</font><a name="5"></a><font color="#FF0000"><a href="match132-1.html#5" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_3.gif"/></a>
+
+                temp = self.__heap[idx]
+                self.__heap[idx] = self.__heap[large]
+                self.__heap[large] = temp
+                idx = large
+</font>            else:
+                break
+
+
+    def sort(self):
+        ori_size = self.__size
+        i = ori_size - 1
+        while i &gt; 0:
+            temp = self.__heap[0]
+            self.__heap[0] = self.__heap[i]
+            self.__heap[i] = temp
+            self.__size -= 1
+            self.sink(0)
+            i -= 1
+        self.__size = ori_size
+        st = 0
+        end = self.__size - 1
+<a name="6"></a><font color="#00FF00"><a href="match132-1.html#6" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_2.gif"/></a>
+
+        while st &lt; end:
+            temp = self.__heap[st]
+            self.__heap[st] = self.__heap[end]
+            self.__heap[end] = temp
+</font>            st += 1
+            end -= 1
+
+
+    def get_heap(self):
+        return self._heap[:self._size]
+
+
+
+
+def find_top_k_largest(n, k):
+
+
+    max = MaxHeap(len(n))
+
+
+
+
+    for i in n:
+        max.insert(i)
+
+
+
+
+<a name="4"></a><font color="#FF00FF"><a href="match132-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+    result = [0] * k
+    for i in range(k):
+        result[i] = max.extractMax()
+
+
+    return result
+
+
+nums = [4, 10, 2, 8, 6, 7]
+k = 3
+</font>print("Top", k, "largest elements:", find_top_k_largest(nums, k))</pre>
+</body>
+</html>

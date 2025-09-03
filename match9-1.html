@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>A8_Sec15_21201336_Ajwad-Ahnaf---AJWAD-AHNAF.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec24_24241225_Tasnia-Islam.txt<p></p><pre>
+﻿#Task 3
+class MinHeap:
+   def __init__(self, capacity):
+       self.heap = [0] * capacity
+       self.size = capacity
+
+
+<a name="6"></a><font color="#00FF00"><a href="match9-0.html#6" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_4.gif"/></a>
+
+   def left(self, i):
+     return 2 * i + 1
+   def right(self, i):
+     return 2 * i + 2
+   def parent(self, i):
+</font>     return (i - 1) // 2
+
+
+<a name="3"></a><font color="#00FFFF"><a href="match9-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_9.gif"/></a>
+
+   def swimUp(self, i):
+       while i &gt; 0 and self.heap[self.parent(i)] &gt; self.heap[i]:
+           self.heap[self.parent(i)], self.heap[i] = self.heap[i], self.heap[self.parent(i)]
+</font><a name="0"></a><font color="#FF0000"><a href="match9-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_17.gif"/></a>
+
+           i = self.parent(i)
+
+
+   def sinkDown(self, i):
+       smallest = i
+       l = self.left(i)
+       r = self.right(i)
+       if l &lt; self.size and self.heap[l] &lt; self.heap[smallest]:
+           smallest = l
+       if r &lt; self.size and self.heap[r] &lt; self.heap[smallest]:
+           smallest = r
+       if smallest != i:
+           self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
+           self.sinkDown(smallest)
+
+
+   def update_root(self, new_val):
+</font>       self.heap[0] = new_val
+       self.sinkDown(0)
+nums = [2, 4, 7, 1, 6]
+m = 4
+heap = MinHeap(m)
+for num in nums:
+   min_load = heap.heap[0]
+   heap.update_root(min_load + num)
+print(heap.heap)
+
+
+
+
+
+
+
+
+#Task 4
+class MaxHeap:
+   def __init__(self, capacity):
+       self.heap = [0]*capacity
+       self.size = 0
+
+
+<a name="7"></a><font color="#0000FF"><a href="match9-0.html#7" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+   def left(self, i):
+     return 2*i + 1
+   def right(self, i):
+     return 2*i + 2
+   def parent(self, i):
+</font><a name="2"></a><font color="#0000FF"><a href="match9-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_10.gif"/></a>
+
+     return (i-1)//2
+
+
+   def swimUp(self, i):
+       while i &gt; 0 and self.heap[self.parent(i)] &lt; self.heap[i]:
+           self.heap[self.parent(i)], self.heap[i] = self.heap[i], self.heap[self.parent(i)]
+           i = self.parent(i)
+
+
+
+
+
+
+   def sinkDown(self, i):
+</font>       largest = i
+<a name="1"></a><font color="#00FF00"><a href="match9-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_14.gif"/></a>
+
+       l, r = self.left(i), self.right(i)
+       if l &lt; self.size and self.heap[l] &gt; self.heap[largest]:
+           largest = l
+       if r &lt; self.size and self.heap[r] &gt; self.heap[largest]:
+           largest = r
+       if largest != i:
+           self.heap[i], self.heap[largest] = self.heap[largest], self.heap[i]
+           self.sinkDown(largest)
+
+
+   def insert(self, value):
+</font>       self.heap[self.size] = value
+       self.size += 1
+       self.swimUp(self.size-1)
+
+
+   def extractMax(self):
+<a name="5"></a><font color="#FF0000"><a href="match9-0.html#5" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_4.gif"/></a>
+
+       root = self.heap[0]
+       self.heap[0] = self.heap[self.size-1]
+       self.size -= 1
+       self.sinkDown(0)
+</font>       return root
+
+
+
+
+nums = [4, 10, 2, 8, 6, 7]
+k = 3
+<a name="4"></a><font color="#FF00FF"><a href="match9-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_4.gif"/></a>
+
+heap = MaxHeap(len(nums))
+for num in nums:
+   heap.insert(num)
+
+
+result = [0]*k
+for i in range(k):
+   result[i] = heap.extractMax()
+</font>
+
+
+
+print(result)</pre>
+</body>
+</html>

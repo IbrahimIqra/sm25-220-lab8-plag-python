@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>A8_Sec08_23101380_MD.-Zilkaful-Rauf-Khan-Mridul.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec13_22299251_MD-ARIFUL-ISLAM.txt<p></p><pre>
+
+import numpy as np
+
+Task01:
+
+class minHeap:
+  def __init__(self, capacity):
+    self.__capacity = capacity
+    self.__hp = np.zeros(self.__capacity,dtype = int)
+    self.__size = 0
+
+  def insert(self, elem):
+    self.__size += 1
+    self.__hp[self.__size -1] = elem
+    self.swim(self.__size -1)
+
+  def swim(self, idx):
+    pidx = (idx -1) // 2
+<a name="3"></a><font color="#00FFFF"><a href="match138-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+    if idx &gt; 0 and self.__hp[idx] &lt; self.__hp[pidx]:
+      self.__hp[idx], self.__hp[pidx] = self.__hp[pidx], self.__hp[idx]
+      self.swim(pidx)
+</font>
+  def extractMin(self):
+    root = self.__hp[0]
+    self.__hp[0],self.__hp[self.__size-1] = self.__hp[self.__size-1], self.__hp[0]
+    self.__size -= 1
+    self.sink(0)
+    return root
+
+  def sink(self,idx):
+    min = idx
+    l = 2 * idx + 1
+    r = 2 * idx + 2
+<a name="1"></a><font color="#00FF00"><a href="match138-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_9.gif"/></a>
+
+    if r &lt; self.__size and self.__hp[r] &lt; self.__hp[min]:
+      min = r
+    if l &lt; self.__size and self.__hp[l] &lt; self.__hp[min]:
+      min = l
+    if min != idx:
+      self.__hp[min],self.__hp[idx] = self.__hp[idx],self.__hp[min]
+      self.sink(min)
+</font>
+  def sort(self):
+    self._heapify()
+    size1 = self.__size
+    while self.__size &gt; 1:
+      self.extractMin()
+    self.__size = size1
+
+  def _heapify(self):
+    for i in range(self.__size // 2 - 1, -1, -1):
+      self.sink(i)
+
+
+  def __str__(self):
+    return str(self.__hp[:self.__size])
+
+
+heap = minHeap(5)
+heap.insert(4)
+heap.insert(3)
+heap.insert(1)
+heap.insert(5)
+heap.insert(2)
+print(heap)
+heap.extractMin()
+print(heap)
+heap.sort()
+print(heap)
+
+
+
+Task02:
+
+class maxHeap:
+  def __init__(self, capacity):
+    self.__capacity = capacity
+    self.__hp = np.zeros(self.__capacity,dtype = int)
+    self.__size = 0
+
+  def insert(self, elem):
+    self.__size += 1
+    self.__hp[self.__size -1] = elem
+    self.swim(self.__size -1)
+
+  def swim(self, idx):
+    pidx = (idx -1) // 2
+<a name="2"></a><font color="#0000FF"><a href="match138-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_5.gif"/></a>
+
+    if idx &gt; 0 and self.__hp[idx] &gt; self.__hp[pidx]:
+      self.__hp[idx], self.__hp[pidx] = self.__hp[pidx], self.__hp[idx]
+      self.swim(pidx)
+</font>
+  def extractMax(self):
+    root = self.__hp[0]
+    self.__hp[0],self.__hp[self.__size-1] = self.__hp[self.__size-1], self.__hp[0]
+    self.__size -= 1
+    self.sink(0)
+    return root
+
+  def sink(self,idx):
+    min = idx
+    l = 2 * idx + 1
+    r = 2 * idx + 2
+<a name="0"></a><font color="#FF0000"><a href="match138-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_9.gif"/></a>
+
+    if l &lt; self.__size and self.__hp[l] &gt; self.__hp[min]:
+      min = l
+    if r &lt; self.__size and self.__hp[r] &gt; self.__hp[min]:
+      min = r
+    if min != idx:
+      self.__hp[min],self.__hp[idx] = self.__hp[idx],self.__hp[min]
+      self.sink(min)
+</font>
+  def sort(self):
+    self._heapify()
+    size1 = self.__size
+    while self.__size &gt; 1:
+      self.extractMax()
+    self.__size = size1
+
+  def _heapify(self):
+    for i in range(self.__size // 2 - 1, -1, -1):
+      self.sink(i)
+
+
+  def __str__(self):
+    return str(self.__hp[:self.__size])
+
+
+heap2 = maxHeap(5)
+heap2.insert(4)
+heap2.insert(3)
+heap2.insert(1)
+heap2.insert(5)
+heap2.insert(2)
+print(heap2)
+heap2.extractMax()
+print(heap2)
+heap2.sort()
+print(heap2)
+
+
+Task03:
+
+<a name="4"></a><font color="#FF00FF"><a href="match138-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_2.gif"/></a>
+
+def processTime(m, arr):
+  heap3 = minHeap(m)
+  for i in range(m):
+    heap3.insert(0)
+  for i in arr:
+    heap3.insert(heap3.extractMin() + i)
+</font>  print(heap3)
+
+processTime(4, [2, 4, 7, 1, 6])
+
+
+
+
+Task04:
+
+def topLargest(arr, k):
+  heap4 = maxHeap(len(arr))
+  for i in arr:
+    heap4.insert(i)
+  arr1 = np.zeros(k,dtype = int)
+  for i in range(k):
+    arr1[i] = heap4.extractMax()
+  return arr1
+
+print(topLargest([4, 10, 2, 8, 6, 7], 3))
+
+</pre>
+</body>
+</html>

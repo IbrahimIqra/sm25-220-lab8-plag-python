@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>A8_Sec12_23301128_Sadman-Shabab.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec06_24101082_Zawad-Ishmam-Hriddo---ZAWAD-ISHMAM-HRIDDO.txt<p></p><pre>
+# Task 1 &amp; 2
+import numpy as np
+class MinHeap:
+    def __init__(self, capacity):
+        self.__heap = np.zeros(capacity+1, dtype=int)
+        self.__size = 0
+        self.__capacity = capacity
+
+    def insert(self, value):
+        if self.__size &gt;= self.__capacity:
+            raise Exception("Heap is full")
+<a name="5"></a><font color="#FF0000"><a href="match114-0.html#5" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_3.gif"/></a>
+
+        self.__size+=1
+        self.__heap[self.__size]=value
+        self.swim(self.__size)
+    def swim(self, index):
+</font>        if index&lt;=1:
+            return
+        self.parent=index//2
+        if self.__heap[self.parent]&gt;self.__heap[index]:
+            self.__heap[self.parent],self.__heap[index]=self.__heap[index],self.__heap[self.parent]
+        self.swim(self.parent)
+    def deleteMax(self):
+        if self.__size==0:
+            raise Exception("Heap is empty")
+<a name="2"></a><font color="#0000FF"><a href="match114-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+        min_value=self.__heap[1]
+        self.__heap[1]=self.__heap[self.__size]
+        self.__size-=1
+        self.sink(1)
+        return min_value
+    def sink(self,index):
+</font>        left=2*index
+        right=2*index+1
+        smallest=index
+<a name="1"></a><font color="#00FF00"><a href="match114-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_5.gif"/></a>
+
+        if left&lt;=self.__size and self.__heap[left]&lt;self.__heap[smallest]:
+            smallest=left
+        if right&lt;=self.__size and self.__heap[right]&lt;self.__heap[smallest]:
+</font>            smallest=right
+        if smallest!=index:
+<a name="6"></a><font color="#00FF00"><a href="match114-0.html#6" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_3.gif"/></a>
+
+            self.__heap[smallest],self.__heap[index]=self.__heap[index],self.__heap[smallest]
+            self.sink(smallest)
+</font>    def extractMin(self):
+        return self.deleteMax()
+    def Min_sort(self):
+        sorted_array=[]
+        size = self.__size
+        for i in range(size):
+            sorted_array.append(self.extractMin())
+        return sorted_array
+class MaxHeap:
+    def __init__(self, capacity):
+        self.__heap = np.zeros(capacity+1, dtype=int) 
+        self.__size = 0
+        self.__capacity = capacity
+
+    def insert(self, value):
+        if self.__size &gt;= self.__capacity:
+            raise Exception("Heap is full")
+<a name="7"></a><font color="#0000FF"><a href="match114-0.html#7" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+        self.__size += 1
+        self.__heap[self.__size] = value
+        self.swim(self.__size)
+
+    def swim(self, index):
+</font>        if index &lt;= 1:
+            return
+        parent = index // 2
+        if self.__heap[parent] &lt; self.__heap[index]: 
+<a name="8"></a><font color="#00FFFF"><a href="match114-0.html#8" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+            self.__heap[parent], self.__heap[index] = self.__heap[index], self.__heap[parent]
+            self.swim(parent)
+</font>
+    def deleteMax(self):
+        if self.__size == 0:
+            raise Exception("Heap is empty")
+<a name="3"></a><font color="#00FFFF"><a href="match114-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+        max_value = self.__heap[1]
+        self.__heap[1] = self.__heap[self.__size]
+        self.__size -= 1
+        self.sink(1)
+        return max_value
+
+    def sink(self, index):
+</font>        left = 2 * index
+        right = 2 * index + 1
+<a name="0"></a><font color="#FF0000"><a href="match114-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_6.gif"/></a>
+
+        largest = index
+
+        if left &lt;= self.__size and self.__heap[left] &gt; self.__heap[largest]:
+            largest = left
+        if right &lt;= self.__size and self.__heap[right] &gt; self.__heap[largest]:
+            largest = right
+</font>
+        if largest != index:
+            self.__heap[largest], self.__heap[index] = self.__heap[index], self.__heap[largest]
+            self.sink(largest)
+
+    def extractMax(self):
+        return self.deleteMax()
+
+    def heapSort(self):
+        result = []
+        while self.__size &gt; 0:
+            result.append(self.extractMax())
+        return result
+
+# Task 3
+<a name="4"></a><font color="#FF00FF"><a href="match114-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+def distribute_tasks(tasks, m):
+    heap=MinHeap(m)
+    for i in range(m):
+        heap.insert(0)
+    for task in tasks:
+        min_machine = heap.extractMin()
+</font>        heap.insert(min_machine + task)
+
+    return heap.Min_sort()
+
+# Task 4
+def array_to_maxHeap(arr):
+    Heap=MaxHeap(len(arr))
+    for num in arr:
+        Heap.insert(num)
+    return Heap
+def k_largest(arr, k):
+    max_heap = array_to_maxHeap(arr)
+    result = []
+    for _ in range(k):
+        result.append(max_heap.extractMax())
+    return result
+
+
+#  Example usage Of Task 3
+tasks = [2, 4, 7, 1, 6]
+m = 4
+result = distribute_tasks(tasks, m)
+print(result)  
+
+# Example usage of Task 4
+arr = [4,10,2,8,6,7]
+k = 3
+print(k_largest(arr, k))</pre>
+</body>
+</html>

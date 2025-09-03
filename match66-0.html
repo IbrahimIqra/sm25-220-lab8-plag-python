@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>A8_Sec27_23101498_Byazid-Bostami.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec27_23101498_Byazid-Bostami.txt<p></p><pre>
+﻿# TASK 1: MinHeap
+class MinHeap:
+    def __init__(self, capacity):
+        self.__a = [0] * capacity
+        self.__size = 0
+        self.__cap = capacity
+
+
+    def insert(self, v):
+        if self.__size == self.__cap:
+            raise RuntimeError("Heap full")
+        self.__a[self.__size] = v
+        self.__swim(self.__size)
+        self.__size += 1
+
+
+    def extractMin(self):
+        if self.__size == 0:
+            raise RuntimeError("Heap empty")
+<a name="4"></a><font color="#FF00FF"><a href="match66-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_2.gif"/></a>
+
+        mn = self.__a[0]
+        self.__a[0] = self.__a[self.__size - 1]
+        self.__size -= 1
+</font>        self.__sink(0)
+        return mn
+
+
+    def __swim(self, i):
+        while i &gt; 0:
+            p = (i - 1) // 2
+<a name="2"></a><font color="#0000FF"><a href="match66-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+            if self.__a[i] &lt; self.__a[p]:
+                t = self.__a[i]; self.__a[i] = self.__a[p]; self.__a[p] = t
+                i = p
+</font>            else:
+                break
+
+
+    def __sink(self, i):
+        while True:
+<a name="0"></a><font color="#FF0000"><a href="match66-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_9.gif"/></a>
+
+            l = 2 * i + 1
+            r = 2 * i + 2
+            smallest = i
+            if l &lt; self.__size and self.__a[l] &lt; self.__a[smallest]:
+                smallest = l
+            if r &lt; self.__size and self.__a[r] &lt; self.__a[smallest]:
+                smallest = r
+            if smallest != i:
+                t = self.__a[i]; self.__a[i] = self.__a[smallest]; self.__a[smallest] = t
+                i = smallest
+            else:
+                break
+
+
+    def sort(self):
+        n = self.__size
+</font>        copy = [0] * n
+        i = 0
+        while i &lt; n:
+            copy[i] = self.__a[i]
+            i += 1
+        temp = MinHeap(n)
+        i = 0
+        while i &lt; n:
+            temp.insert(copy[i])
+            i += 1
+        out = [0] * n
+        i = 0
+        while i &lt; n:
+            out[i] = temp.extractMin()
+            i += 1
+        return out
+
+
+    def to_array(self):
+        n = self.__size
+        out = [0] * n
+        i = 0
+        while i &lt; n:
+            out[i] = self.__a[i]
+            i += 1
+        return out
+
+
+    def size(self):
+        return self.__size
+
+
+
+
+# TASK 2: MaxHeap
+class MaxHeap:
+    def __init__(self, capacity):
+        self.__a = [0] * capacity
+        self.__size = 0
+        self.__cap = capacity
+
+
+    def insert(self, v):
+        if self.__size == self.__cap:
+            raise RuntimeError("Heap full")
+        self.__a[self.__size] = v
+        self.__swim(self.__size)
+        self.__size += 1
+
+
+    def extractMax(self):
+        if self.__size == 0:
+            raise RuntimeError("Heap empty")
+<a name="5"></a><font color="#FF0000"><a href="match66-1.html#5" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_2.gif"/></a>
+
+        mx = self.__a[0]
+        self.__a[0] = self.__a[self.__size - 1]
+        self.__size -= 1
+</font>        self.__sink(0)
+        return mx
+
+
+    def __swim(self, i):
+        while i &gt; 0:
+            p = (i - 1) // 2
+<a name="3"></a><font color="#00FFFF"><a href="match66-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+            if self.__a[i] &gt; self.__a[p]:
+                t = self.__a[i]; self.__a[i] = self.__a[p]; self.__a[p] = t
+                i = p
+</font>            else:
+                break
+
+
+    def __sink(self, i):
+        while True:
+<a name="1"></a><font color="#00FF00"><a href="match66-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_9.gif"/></a>
+
+            l = 2 * i + 1
+            r = 2 * i + 2
+            largest = i
+            if l &lt; self.__size and self.__a[l] &gt; self.__a[largest]:
+                largest = l
+            if r &lt; self.__size and self.__a[r] &gt; self.__a[largest]:
+                largest = r
+            if largest != i:
+                t = self.__a[i]; self.__a[i] = self.__a[largest]; self.__a[largest] = t
+                i = largest
+            else:
+                break
+
+
+    def sort(self):
+        n = self.__size
+</font>        copy = [0] * n
+        i = 0
+        while i &lt; n:
+            copy[i] = self.__a[i]
+            i += 1
+        temp = MaxHeap(n)
+        i = 0
+        while i &lt; n:
+            temp.insert(copy[i])
+            i += 1
+        out = [0] * n
+        i = 0
+        while i &lt; n:
+            out[i] = temp.extractMax()
+            i += 1
+        return out
+
+
+    def to_array(self):
+        n = self.__size
+        out = [0] * n
+        i = 0
+        while i &lt; n:
+            out[i] = self.__a[i]
+            i += 1
+        return out
+
+
+    def size(self):
+        return self.__size
+
+
+
+
+# TASK 3: Distribute Loads
+def distribute_loads(tasks, m):
+    h = MinHeap(m)
+    i = 0
+    while i &lt; m:
+        h.insert(0)
+        i += 1
+    n = len(tasks)
+    i = 0
+    while i &lt; n:
+        cur = h.extractMin()
+        cur = cur + tasks[i]
+        h.insert(cur)
+        i += 1
+    return h.to_array()
+
+
+
+
+# TASK 4: Top-K Largest
+def top_k(nums, k):
+    n = len(nums)
+    h = MaxHeap(n)
+    i = 0
+    while i &lt; n:
+        h.insert(nums[i])
+        i += 1
+    out = [0] * k
+    i = 0
+    while i &lt; k:
+        out[i] = h.extractMax()
+        i += 1
+    return out
+
+
+
+
+def _print(label, arr):
+    s = "["
+    i = 0
+    while i &lt; len(arr):
+        if i &gt; 0:
+            s += ", "
+        s += str(arr[i])
+        i += 1
+    s += "]"
+    print(label + ": " + s)</pre>
+</body>
+</html>

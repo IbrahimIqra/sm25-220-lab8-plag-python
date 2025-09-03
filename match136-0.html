@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>A8_Sec28_23101273_Mithila-Tasnim-Mithy.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec28_23101273_Mithila-Tasnim-Mithy.txt<p></p><pre>
+TASK03:
+
+class MinHeap:
+  def __init__(self, capacity) :
+     self.__heap=[0]*capacity
+     self.__size=0
+  def  insert(self, value):
+   if self.__size&gt;= len(self.__heap):
+      return
+   else:
+    self.__heap[self.__size]= value
+    self.__size+=1
+    self.swim(self.__size -1)
+  def swim(self, idx):
+   while idx&gt;0:
+    parent_node=(idx -1)//2
+<a name="3"></a><font color="#00FFFF"><a href="match136-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+    if self.__heap[idx] &lt;self.__heap[parent_node]:
+       self.__heap[idx],self.__heap[parent_node]= self.__heap[parent_node],self.__heap[idx]
+</font>    idx= parent_node
+  def extract_Min(self):
+    if self.__size==0:
+       return None
+    min_val= self.__heap[0]
+    self.__size -=1
+    self.__heap[0]= self.__heap[self.__size]
+<a name="0"></a><font color="#FF0000"><a href="match136-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_11.gif"/></a>
+
+    self.sink(0)
+    return(min_val)
+  def sink(self, idx):
+   s= idx
+   left= 2*idx+1
+   right= 2*idx+2
+   if left &lt; self.__size and self.__heap[left] &lt; self.__heap[s]:
+          s=left
+   if right&lt; self.__size and self.__heap[right]&lt; self.__heap[s]:
+      s = right
+   if s != idx:
+       self.__heap[idx],self.__heap[s]= self.__heap[s],self.__heap[idx]
+</font>       self.sink(idx)
+  def sort(self):
+     temp= self.__size
+     for i in range(self.__size -1,-1):
+           self.__heap[0],self.__heap[i]=self.__heap[i],self.__heap[0]
+           self.__size -=1
+           self.sink(0)
+     self.__size= temp
+  def getfunction_1(self):
+    return self.__heap
+  def getfunction_2(self):
+   return self.__size
+
+  def machines(self ,tasks, m):
+     for i in range(m):
+       self.insert(0)
+     for j in range(len(tasks)):
+        ex= self.extract_Min()
+        ex+= tasks[j]
+        self.insert(ex)
+     output=[0]*m
+     for y in range(m):
+        output[y]=self.extract_Min()
+     return output
+
+
+
+tasks= [2,4,7,1,6]
+m=4
+
+min= MinHeap(len(tasks))
+call_m=min.machines(tasks, m)
+print(call_m)
+
+
+
+
+TASK04:
+
+
+class MaxHeap:
+  def __init__(self, capacity) :
+     self.__heap=[0]*capacity
+     self.__size=0
+  def insert(self, val):
+   if self.__size&gt;= len(self.__heap):
+       return
+   self.__heap[self.__size]= val
+   self.__size+=1
+   self.swim(self.__size -1)
+  def swim(self,i):
+   while i&gt;0:
+    parent_node= (i-1)//2
+<a name="2"></a><font color="#0000FF"><a href="match136-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+    if self.__heap[i]&gt;self.__heap[parent_node]:
+       self.__heap[i],self.__heap[parent_node] = self.__heap[parent_node],self.__heap[i]
+</font>    i= parent_node
+  def extractMax(self):
+   if self.__size==0:
+      return 0
+   max= self.__heap[0]
+   self.__size-=1
+   self.__heap[0]= self.__heap[self.__size]
+<a name="1"></a><font color="#00FF00"><a href="match136-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_11.gif"/></a>
+
+   self.sink(0)
+   return max
+  def sink(self,i):
+   large_val=i
+   left= 2*i +1
+   right= 2*i+2
+   if left&lt; self.__size and self.__heap[left]&gt; self.__heap[large_val]:
+        large_val=left
+   if right &lt;self.__size and self.__heap[right]&gt; self.__heap[large_val]:
+        large_val= right
+   if large_val != i:
+       self.__heap[i], self.__heap[large_val]= self.__heap[large_val],self.__heap[i]
+</font>       self.sink(large_val)
+  def sort(self):
+   temp= self.__size
+   for i in range(self.__size-1,-1):
+     self.__heap[0],self.__heap[i]= self.__heap[i],self.__heap[0]
+     self.__size-=1
+     self.sink(0)
+   self.__size= temp
+
+  def get_1(self):
+   return self.__heap
+  def get_2(self):
+   return self.__size
+
+  def design(self, nums,k ):
+    for i in nums:
+      max.insert(i)
+    output=[0]*k
+    for j in range(k):
+       output[j]=max.extractMax()
+    return output
+nums=[4, 10,2, 8, 6, 7]
+k=3
+max=MaxHeap(len(nums))
+call_k= max.design(nums,k)
+print(call_k)</pre>
+</body>
+</html>

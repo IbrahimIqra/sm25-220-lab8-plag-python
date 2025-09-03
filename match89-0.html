@@ -1,0 +1,352 @@
+<html>
+<head>
+<title>A8_sec28_23241058_Fariha-Afreen-Preety---FARIHA-AFREEN-PREETY.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_sec28_23241058_Fariha-Afreen-Preety---FARIHA-AFREEN-PREETY.txt<p></p><pre>
+﻿Task 3
+
+
+class MinHeap:
+    def __init__(self, cap):
+
+
+        self.__heap_arr =[0] * cap
+        self.__size = 0
+
+
+    def insert(self, val):
+
+
+        if self.__size &gt;= len(self.__heap_arr):
+            print("Heap is full!")
+            return
+
+
+
+
+        self.__heap_arr[self.__size] =val
+        self.__size +=1
+
+
+
+
+        self.__swim(self.__size - 1)
+
+
+<a name="3"></a><font color="#00FFFF"><a href="match89-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_5.gif"/></a>
+
+    def __swim(self, idx):
+
+
+        p_idx = (idx - 1) // 2
+
+
+        if idx&gt; 0 and self.__heap_arr[idx] &lt; self.__heap_arr[p_idx]:
+          self.__heap_arr[idx],self.__heap_arr[p_idx] = self.__heap_arr[p_idx],self.__heap_arr[idx]
+</font>
+
+          self.__swim(p_idx)
+
+
+    def extractMin(self):
+
+
+        if self.__size &lt;= 0:
+          print("Heap is empty!")
+          return None
+
+
+<a name="4"></a><font color="#FF00FF"><a href="match89-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_2.gif"/></a>
+
+        min =self.__heap_arr[0]
+
+
+        self.__heap_arr[0] = self.__heap_arr[self.__size - 1]
+        self.__size -= 1
+</font>
+
+        if self.__size &gt; 0:
+            self.__sink(0)
+
+
+        return min
+
+
+<a name="0"></a><font color="#FF0000"><a href="match89-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_11.gif"/></a>
+
+    def __sink(self, idx):
+        smallest = idx
+        left = 2*idx + 1
+        right = 2 *idx+ 2
+
+
+
+
+        if left &lt;self.__size and self.__heap_arr[left]&lt;self.__heap_arr[smallest]:
+            smallest = left
+
+
+        if right &lt;self.__size and self.__heap_arr[right] &lt; self.__heap_arr[smallest]:
+            smallest = right
+
+
+        if smallest != idx:
+            self.__heap_arr[idx], self.__heap_arr[smallest] = self.__heap_arr[smallest], self.__heap_arr[idx]
+</font>            self.__sink(smallest)
+
+
+    def get_array(self):
+
+
+        return self.__heap_arr[:self.__size]
+
+
+    def get_size(self):
+
+
+        return self.__size
+
+
+
+
+def distributeTasks(tasks, m):
+
+
+    mloads = MinHeap(m)
+
+
+
+
+    for i in range(m):
+      mloads.insert(0)
+
+
+
+
+    for i in tasks:
+
+
+        min_load =mloads.extractMin()
+        updated_load = min_load +i
+
+
+        mloads.insert(updated_load)
+
+
+
+
+    return  mloads.get_array()
+
+
+
+
+
+
+print("Testing Task Distribution...")
+
+
+
+
+tasks1 = [2, 4, 7, 1, 6]
+m1 =4
+print(f"\nTest Case 1:")
+print(f"Tasks: {tasks1}")
+print(f"Number of machines: {m1}")
+result1 =distributeTasks(tasks1, m1)
+print(f"Result:{result1}")
+
+
+tasks2 =[10, 8, 7, 6, 5]
+m2 = 3
+print(f"\nTest Case 2:")
+print(f"Tasks:{tasks2}")
+print(f"Number of machines:{m2}")
+result2 = distributeTasks(tasks2, m2)
+print(f"Result:{result2}")
+
+
+
+
+tasks3 =[5, 3, 1]
+m3 = 5
+print(f"\nTest Case 3:")
+print(f"Tasks:{tasks3}")
+print(f"Number of machines:{m3}")
+result3 = distributeTasks(tasks3, m3)
+print(f"Result: {result3}")
+
+
+
+
+
+
+
+
+Task 4
+
+
+
+
+class MaxHeap:
+    def __init__(self, capacity):
+
+
+        self.__heap_arr =[0] *capacity
+        self.__size = 0
+
+
+    def insert(self, val):
+
+
+      if self.__size &gt;=len(self.__heap_arr):
+        print("Heap is full!")
+        return
+
+
+
+
+      self.__heap_arr[self.__size] =val
+      self.__size +=1
+
+
+      self.__swim(self.__size-1)
+
+
+<a name="1"></a><font color="#00FF00"><a href="match89-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_6.gif"/></a>
+
+    def __swim(self, idx):
+
+
+        p_idx = (idx - 1) // 2
+
+
+
+
+        if idx&gt; 0 and self.__heap_arr[idx] &gt; self.__heap_arr[p_idx]:
+            self.__heap_arr[idx], self.__heap_arr[p_idx] = self.__heap_arr[p_idx], self.__heap_arr[idx]
+
+
+            self.__swim(p_idx)
+</font>
+
+    def extractMax(self):
+
+
+        if self.__size&lt;= 0:
+            print("Heap is empty!")
+            return None
+
+
+        max = self.__heap_arr[0]
+
+
+
+
+        self.__heap_arr[0] =self.__heap_arr[self.__size-1]
+        self.__size -= 1
+
+
+        if self.__size &gt; 0:
+            self.__sink(0)
+
+
+        return max
+
+
+    def __sink(self, idx):
+
+
+      largest = idx
+      left = 2* idx+ 1
+      right = 2 *idx+2
+
+
+
+
+      if left &lt; self.__size and self.__heap_arr[left] &gt;self.__heap_arr[largest]:
+          largest = left
+
+
+<a name="2"></a><font color="#0000FF"><a href="match89-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_6.gif"/></a>
+
+      if right &lt;self.__size and self.__heap_arr[right] &gt;self.__heap_arr[largest]:
+          largest = right
+
+
+      if largest !=idx:
+          self.__heap_arr[idx], self.__heap_arr[largest] = self.__heap_arr[largest], self.__heap_arr[idx]
+          self.__sink(largest)
+</font>
+
+    def get_array(self):
+
+
+      return self.__heap_arr[:self.__size]
+
+
+    def get_size(self):
+
+
+      return self.__size
+
+
+
+
+def findTopKElements(nums, k):
+
+
+    heap = MaxHeap(len(nums))
+
+
+<a name="5"></a><font color="#FF0000"><a href="match89-1.html#5" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_2.gif"/></a>
+
+    for i in nums:
+        heap.insert(i)
+
+
+
+
+    res = []
+    for i in range(k):
+        res.append(heap.extractMax())
+
+
+    return res
+</font>
+
+
+
+
+
+print("Testing Find Top K Elements...")
+
+
+nums1 =[4, 10, 2, 8, 6, 7]
+k1 = 3
+print(f"\nTest Case 1:")
+print(f"Array:{nums1}")
+print(f"k:{k1}")
+result1 = findTopKElements(nums1,k1)
+print(f"Top {k1} largest elements: {result1}")
+
+
+nums2 =[5, 15, 3, 20, 10, 25]
+k2 = 4
+print(f"\nTest Case 2:")
+print(f"Array:{nums2}")
+print(f"k:{k2}")
+result2 = findTopKElements(nums2, k2)
+print(f"Top {k2} largest elements:{result2}")
+
+
+nums3= [7, 3, 9, 1, 5]
+k3 = 5
+print(f"\nTest Case 3:")
+print(f"Array:{nums3}")
+print(f"k:{k3}")
+result3 =findTopKElements(nums3, k3)
+print(f"Top {k3} largest elements: {result3}")</pre>
+</body>
+</html>

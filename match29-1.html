@@ -1,0 +1,202 @@
+<html>
+<head>
+<title>A8_Sec10_23101517_Sazzad-Hossain-Bhuiyan---SAZZAD-HOSSAIN-BHUIYAN.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec24_24341062_Madhuri-Mazumder.txt<p></p><pre>
+#task-1
+class MinHeap:
+    def __init__(self,capcity):
+        self.arr= [0]*capcity
+        self.n=0
+        self.cap= capcity
+
+    def insert(self,val):
+        if self.n&gt;= self.cap:
+            print("heap full!!")
+<a name="8"></a><font color="#00FFFF"><a href="match29-0.html#8" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_2.gif"/></a>
+
+            return
+        self.arr[self.n]= val
+        self.swimup(self.n)
+        self.n +=1
+
+    def swimup(self,idx):
+</font>        while idx&gt;0:
+            parent =(idx-1)//2
+            if self.arr[idx]&lt;self.arr[parent]:
+<a name="7"></a><font color="#0000FF"><a href="match29-0.html#7" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_2.gif"/></a>
+
+                tmp = self.arr[idx]
+                self.arr[idx]= self.arr[parent]
+                self.arr[parent] =tmp
+</font>                idx=parent
+            else:
+                break
+
+    def extractMin(self):
+<a name="2"></a><font color="#0000FF"><a href="match29-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_4.gif"/></a>
+
+        if self.n== 0:
+            return None
+        ans =self.arr[0]
+        self.arr[0]= self.arr[self.n-1]
+        self.n -=1
+        self.sinkdown(0)
+        return ans
+
+    def sinkdown(self,i):
+</font>        while True:
+            l=2*i+1
+            r=2*i+2
+            sm=i
+<a name="1"></a><font color="#00FF00"><a href="match29-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_6.gif"/></a>
+
+            if l&lt;self.n and self.arr[l]&lt;self.arr[sm]:
+                sm = l
+            if r&lt; self.n and self.arr[r]&lt; self.arr[sm]:
+                sm= r
+            if sm!= i:
+                t= self.arr[i]
+</font><a name="9"></a><font color="#FF00FF"><a href="match29-0.html#9" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_2.gif"/></a>
+
+                self.arr[i]= self.arr[sm]
+                self.arr[sm] =t
+</font>                i =sm
+            else:
+                break
+
+    def sort(self):
+        a =[]
+        while self.n&gt; 0:
+            a.append(self.extractMin())
+        return a
+
+
+#task-2
+class MaxHeap:
+    def __init__(self,capcity):
+        self.data =[0]*capcity
+        self.sz=0
+        self.cap= capcity
+
+    def insert(self,v):
+        if self.sz&gt;= self.cap:
+            print("heap full!!")
+            return
+        self.data[self.sz]= v
+        self.swim(self.sz)
+        self.sz +=1
+
+<a name="6"></a><font color="#00FF00"><a href="match29-0.html#6" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_3.gif"/></a>
+
+    def swim(self,i):
+        while i&gt;0:
+            p=(i-1)//2
+            if self.data[i]&gt; self.data[p]:
+</font>                tmp=self.data[i]
+                self.data[i]= self.data[p]
+                self.data[p]= tmp
+                i=p
+            else:
+                break
+
+    def extractMax(self):
+        if self.sz==0:
+<a name="3"></a><font color="#00FFFF"><a href="match29-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_4.gif"/></a>
+
+            return None
+        ans=self.data[0]
+        self.data[0]= self.data[self.sz-1]
+        self.sz -=1
+        self.sink(0)
+        return ans
+
+    def sink(self,i):
+</font>        while True:
+<a name="0"></a><font color="#FF0000"><a href="match29-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_7.gif"/></a>
+
+            l=2*i+1
+            r=2*i+2
+            big=i
+            if l&lt; self.sz and self.data[l]&gt; self.data[big]:
+                big=l
+            if r&lt; self.sz and self.data[r]&gt; self.data[big]:
+                big=r
+            if big!= i:
+                t=self.data[i]
+</font>                self.data[i]= self.data[big]
+                self.data[big]=t
+                i=big
+            else:
+                break
+
+    def sort(self):
+        out=[]
+        while self.sz&gt;0:
+            out.append(self.extractMax())
+        return out
+
+
+#task-3
+def distribute_tasks(tasks,m):
+    heap= MinHeap(m)
+    for i in range(m):
+        heap.insert(0)
+    for t in tasks:
+        x= heap.extractMin()
+        newv=x+t
+        heap.insert(newv)
+    res=[]
+    for j in range(heap.n):
+        res.append(heap.arr[j])
+    return res
+
+
+#task-4
+<a name="5"></a><font color="#FF0000"><a href="match29-0.html#5" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_3.gif"/></a>
+
+def find_top_k_largest(nums,k):
+    heap= MaxHeap(len(nums))
+    for num in nums:
+        heap.insert(num)
+    ans=[]
+    for i in range(k):
+        ans.append(heap.extractMax())
+</font>    return ans
+
+
+if __name__=="__main__":
+    # task-1 driver code
+    print("MinHeap test")
+<a name="4"></a><font color="#FF00FF"><a href="match29-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+    h= MinHeap(10)
+    h.insert(5)
+    h.insert(3)
+    h.insert(8)
+    h.insert(1)
+    print("extract:",h.extractMin())
+    print("extract:",h.extractMin())
+    # task-2 driver code
+    print("\nMaxHeap test")
+    mh= MaxHeap(10)
+</font><a name="10"></a><font color="#FF0000"><a href="match29-0.html#10" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_2.gif"/></a>
+
+    mh.insert(4)
+    mh.insert(9)
+    mh.insert(2)
+    print("extract:",mh.extractMax())
+    print("extract:",mh.extractMax())
+    # task-3 driver code
+    print("\nDistribute")
+</font>    tasks=[2,4,7,1,6]
+    print(distribute_tasks(tasks,3))
+    # task-4 driver code
+    print("\nTop k largest")
+    arr=[4,10,2,8,6,7]
+    print(find_top_k_largest(arr,3))
+</pre>
+</body>
+</html>

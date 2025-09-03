@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>A8_Sec25_22301255_Sakibul-Bashar-Khadem.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec27_22201685_Nusrat-Tabassum-Ponno.txt<p></p><pre>
+#Task 3
+<a name="0"></a><font color="#FF0000"><a href="match43-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_26.gif"/></a>
+
+class MinHeap:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.size = 0
+        self.heap = [0] * capacity
+
+    def insert(self, value):
+        if self.size &gt;= self.capacity:
+            return
+        self.heap[self.size] = value
+        self.size += 1
+        self.swim(self.size - 1)
+
+    def swim(self, index):
+        while index &gt; 0:
+            parent = (index - 1) // 2
+            if self.heap[index] &lt; self.heap[parent]:
+                self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
+                index = parent
+            else:
+                break
+
+    def extract(self):
+        if self.size == 0:
+            return None
+        min_val = self.heap[0]
+        self.heap[0] = self.heap[self.size - 1]
+        self.size -= 1
+        self.sink(0)
+        return min_val
+
+    def sink(self, index):
+        while 2 * index + 1 &lt; self.size:
+</font>            low = 2 * index + 1
+            if low + 1 &lt; self.size and self.heap[low + 1] &lt; self.heap[low]:
+                low += 1
+            if self.heap[index] &lt;= self.heap[low]:
+                break
+            self.heap[index], self.heap[low] = self.heap[low], self.heap[index]
+            index = low
+
+    def print_heap(self):
+        for i in range(self.size):
+            print(self.heap[i], end=' ')
+        print()
+
+def task(task, k):
+    n = len(task)
+    heap = MinHeap(k)
+    for i in range(k):
+        heap.insert(0)
+
+    for i in range(n):
+        min_load = heap.extract()
+        min_load += task[i]
+        heap.insert(min_load)
+
+    heap.print_heap()
+
+tasks = [2, 4, 7, 1, 6]
+m = 4
+task(tasks, m)
+
+
+
+#Task 4
+<a name="1"></a><font color="#00FF00"><a href="match43-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_26.gif"/></a>
+
+class MaxHeap:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.size = 0
+        self.heap = [0] * capacity
+
+    def insert(self, value):
+        if self.size &gt;= self.capacity:
+            return
+        self.heap[self.size] = value
+        self.size += 1
+        self.swim(self.size - 1)
+
+    def swim(self, index):
+        while index &gt; 0:
+            parent = (index - 1) // 2
+            if self.heap[index] &gt; self.heap[parent]:
+                self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
+                index = parent
+            else:
+                break
+
+    def extract(self):
+        if self.size == 0:
+            return None
+        max_val = self.heap[0]
+        self.heap[0] = self.heap[self.size - 1]
+        self.size -= 1
+        self.sink(0)
+        return max_val
+
+    def sink(self, index):
+        while 2 * index + 1 &lt; self.size:
+</font>            high = 2 * index + 1
+            if high + 1 &lt; self.size and self.heap[high + 1] &gt; self.heap[high]:
+                high += 1
+            if self.heap[index] &gt;= self.heap[high]:
+                break
+            self.heap[index], self.heap[high] = self.heap[high], self.heap[index]
+            index = high
+
+def largest(nums, k):
+    n = len(nums)
+    heap = MaxHeap(n)
+
+    for i in range(n):
+        heap.insert(nums[i])
+
+    for i in range(k):
+        val = heap.extract()
+        print(val, end=' ')
+    print()
+
+nums = [4, 10, 2, 8, 6, 7]
+k = 3
+largest(nums, k)
+
+
+</pre>
+</body>
+</html>

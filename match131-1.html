@@ -1,0 +1,306 @@
+<html>
+<head>
+<title>A8_Sec07_21301185_Fariha-Feroz.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec21_22301248_Maiesha-Noshin.txt<p></p><pre>
+﻿LAB-8
+
+
+Task-3
+
+
+class SimpleMinHeap:
+
+
+    def __init__(self, capacity):
+        self.arr = [0] * capacity
+        self.capacity = capacity
+<a name="0"></a><font color="#FF0000"><a href="match131-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_7.gif"/></a>
+
+        self.size = capacity
+
+
+    def _parent(self, i):
+        return (i - 1) // 2
+
+
+    def _left(self, i):
+        return 2 * i + 1
+
+
+    def _right(self, i):
+        return 2 * i + 2
+
+
+    def _swap(self, i, j):
+        tmp = self.arr[i]
+        self.arr[i] = self.arr[j]
+        self.arr[j] = tmp
+
+
+    def swim(self, i):
+</font><a name="2"></a><font color="#0000FF"><a href="match131-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+
+
+        while i &gt; 0:
+            p = self._parent(i)
+            if self.arr[p] &lt;= self.arr[i]:
+                break
+            self._swap(p, i)
+            i = p
+
+
+    def sink(self, i):
+</font>
+
+        while True:
+            l = self._left(i)
+            r = self._right(i)
+            smallest = i
+
+
+            if l &lt; self.size and self.arr[l] &lt; self.arr[smallest]:
+                smallest = l
+            if r &lt; self.size and self.arr[r] &lt; self.arr[smallest]:
+                smallest = r
+
+
+            if smallest == i:
+                break
+            self._swap(i, smallest)
+            i = smallest
+
+
+    def insert(self, value):
+
+
+        if self.size &gt;= self.capacity:
+            raise IndexError("Heap is full - cannot insert")
+        self.arr[self.size] = value
+        self.size += 1
+        self.swim(self.size - 1)
+
+
+    def extract_min(self):
+
+
+        if self.size == 0:
+            raise IndexError("Heap is empty - cannot extract")
+        root = self.arr[0]
+
+
+        self.size -= 1
+        if self.size &gt; 0:
+            self.arr[0] = self.arr[self.size]
+
+
+        self.arr[self.size] = 0
+        if self.size &gt; 0:
+            self.sink(0)
+        return root
+
+
+    def build_from_array(self, initial_array):
+
+
+        n = len(initial_array)
+        if n &gt; self.capacity:
+            raise ValueError("Initial array too large")
+        i = 0
+        while i &lt; n:
+            self.arr[i] = initial_array[i]
+            i += 1
+        self.size = n
+
+
+        start = (self.size // 2) - 1
+        while start &gt;= 0:
+            self.sink(start)
+            start -= 1
+
+
+def assign_tasks_to_machines(tasks, m):
+
+
+    if m &lt;= 0:
+        return []
+
+
+    heap = SimpleMinHeap(m)
+    heap.build_from_array([0] * m)
+
+
+    i = 0
+    while i &lt; len(tasks):
+        task_time = tasks[i]
+        smallest_load = heap.extract_min()
+        new_load = smallest_load + task_time
+        heap.insert(new_load)
+        i += 1
+
+
+    result = [0] * m
+    j = 0
+    while j &lt; m:
+        result[j] = heap.arr[j]
+        j += 1
+    return result
+
+
+
+
+tasks_example = [2, 4, 7, 1, 6]
+machines = 4
+print("Task 3 - Final loads for machines:", assign_tasks_to_machines(tasks_example, machines))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Task-4
+
+
+class SimpleMaxHeap:
+    def __init__(self, capacity):
+        self.arr = [0] * capacity
+        self.capacity = capacity
+        self.size = 0
+
+
+<a name="1"></a><font color="#00FF00"><a href="match131-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_6.gif"/></a>
+
+    def _parent(self, i):
+        return (i - 1) // 2
+
+
+    def _left(self, i):
+        return 2 * i + 1
+
+
+    def _right(self, i):
+        return 2 * i + 2
+
+
+    def _swap(self, i, j):
+        tmp = self.arr[i]
+        self.arr[i] = self.arr[j]
+        self.arr[j] = tmp
+
+
+    def swim(self, i):
+</font><a name="3"></a><font color="#00FFFF"><a href="match131-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+        while i &gt; 0:
+            p = self._parent(i)
+            if self.arr[p] &gt;= self.arr[i]:
+                break
+            self._swap(p, i)
+            i = p
+
+
+    def sink(self, i):
+</font>        while True:
+            l = self._left(i)
+<a name="4"></a><font color="#FF00FF"><a href="match131-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+            r = self._right(i)
+            largest = i
+            if l &lt; self.size and self.arr[l] &gt; self.arr[largest]:
+                largest = l
+            if r &lt; self.size and self.arr[r] &gt; self.arr[largest]:
+</font>                largest = r
+            if largest == i:
+                break
+            self._swap(i, largest)
+            i = largest
+
+
+    def insert(self, value):
+        if self.size &gt;= self.capacity:
+            raise IndexError("Heap is full - cannot insert")
+        self.arr[self.size] = value
+        self.size += 1
+        self.swim(self.size - 1)
+
+
+<a name="5"></a><font color="#FF0000"><a href="match131-0.html#5" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_2.gif"/></a>
+
+    def extract_max(self):
+        if self.size == 0:
+            raise IndexError("Heap is empty - cannot extract")
+        root = self.arr[0]
+        self.size -= 1
+</font>        if self.size &gt; 0:
+            self.arr[0] = self.arr[self.size]
+
+
+        self.arr[self.size] = 0
+        if self.size &gt; 0:
+            self.sink(0)
+        return root
+
+
+    def build_from_array(self, source):
+        n = len(source)
+        if n &gt; self.capacity:
+            raise ValueError("Source too large")
+        i = 0
+        while i &lt; n:
+            self.arr[i] = source[i]
+            i += 1
+        self.size = n
+        start = (self.size // 2) - 1
+        while start &gt;= 0:
+            self.sink(start)
+            start -= 1
+
+
+def top_k_largest(nums, k):
+    n = len(nums)
+    if k &lt;= 0 or n == 0:
+        return []
+    if k &gt; n:
+        raise ValueError("k cannot be larger than number of elements")
+
+
+
+
+    heap = SimpleMaxHeap(n)
+    heap.build_from_array(nums)
+
+
+
+
+    result = [0] * k
+    i = 0
+    while i &lt; k:
+        result[i] = heap.extract_max()
+        i += 1
+    return result
+
+
+numbers_example = [4, 10, 2, 8, 6, 7]
+k_value = 3
+print("Task 4 - Top", k_value, "largest elements:", top_k_largest(numbers_example, k_value))</pre>
+</body>
+</html>

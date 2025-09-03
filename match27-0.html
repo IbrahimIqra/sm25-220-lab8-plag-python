@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>A8_Sec25_22301255_Sakibul-Bashar-Khadem.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec25_22301255_Sakibul-Bashar-Khadem.txt<p></p><pre>
+class MinHeap:
+    def __init__(self, cap):
+        self.cap = cap
+        self.n = 0
+        self.arr = [0] * cap
+
+    def push(self, val):
+        if self.n == self.cap:
+            return
+        self.arr[self.n] = val
+        self.n += 1
+<a name="3"></a><font color="#00FFFF"><a href="match27-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_5.gif"/></a>
+
+        self._up(self.n - 1)
+
+    def _up(self, i):
+        while i &gt; 0:
+            p = (i - 1) // 2
+            if self.arr[i] &lt; self.arr[p]:
+                self.arr[i], self.arr[p] = self.arr[p], self.arr[i]
+</font>                i = p
+<a name="0"></a><font color="#FF0000"><a href="match27-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_19.gif"/></a>
+
+            else:
+                break
+
+    def pop(self):
+        if self.n == 0:
+            return None
+        root = self.arr[0]
+        self.arr[0] = self.arr[self.n - 1]
+        self.n -= 1
+        self._down(0)
+        return root
+
+    def _down(self, i):
+        while True:
+            l = 2 * i + 1
+            r = 2 * i + 2
+            s = i
+            if l &lt; self.n and self.arr[l] &lt; self.arr[s]:
+                s = l
+            if r &lt; self.n and self.arr[r] &lt; self.arr[s]:
+                s = r
+            if s != i:
+                self.arr[i], self.arr[s] = self.arr[s], self.arr[i]
+</font>                i = s
+            else:
+                break
+
+    def toArray(self):
+        return self.arr[:self.n]
+
+
+class MaxHeap:
+    def __init__(self, cap):
+        self.cap = cap
+        self.n = 0
+        self.arr = [0] * cap
+
+    def push(self, val):
+        if self.n == self.cap:
+            return
+        self.arr[self.n] = val
+        self.n += 1
+<a name="2"></a><font color="#0000FF"><a href="match27-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_6.gif"/></a>
+
+        self._up(self.n - 1)
+
+    def _up(self, i):
+        while i &gt; 0:
+            p = (i - 1) // 2
+            if self.arr[i] &gt; self.arr[p]:
+                self.arr[i], self.arr[p] = self.arr[p], self.arr[i]
+</font>                i = p
+<a name="1"></a><font color="#00FF00"><a href="match27-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_19.gif"/></a>
+
+            else:
+                break
+
+    def pop(self):
+        if self.n == 0:
+            return None
+        root = self.arr[0]
+        self.arr[0] = self.arr[self.n - 1]
+        self.n -= 1
+        self._down(0)
+        return root
+
+    def _down(self, i):
+        while True:
+            l = 2 * i + 1
+            r = 2 * i + 2
+            big = i
+            if l &lt; self.n and self.arr[l] &gt; self.arr[big]:
+                big = l
+            if r &lt; self.n and self.arr[r] &gt; self.arr[big]:
+                big = r
+            if big != i:
+                self.arr[i], self.arr[big] = self.arr[big], self.arr[i]
+</font>                i = big
+            else:
+                break
+
+    def toArray(self):
+        return self.arr[:self.n]
+
+
+<a name="4"></a><font color="#FF00FF"><a href="match27-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+def assignTasks(tasks, m):
+    heap = MinHeap(m)
+    for _ in range(m):
+        heap.push(0)
+    for t in tasks:
+        cur = heap.pop()
+</font>        heap.push(cur + t)
+    return sorted(heap.toArray())
+
+
+def topK(nums, k):
+    heap = MaxHeap(len(nums))
+    for x in nums:
+        heap.push(x)
+    out = [0] * k
+    for i in range(k):
+        out[i] = heap.pop()
+    return out
+
+
+# tester
+print(assignTasks([2, 4, 7, 1, 6], 4))
+print(topK([4, 10, 2, 8, 6, 7], 3))
+</pre>
+</body>
+</html>

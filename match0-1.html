@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>A8_Sec19_23141031_Shamiur-Rahman.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec12_24241132_Md.-Moazzem-hossain-Majumder.txt<p></p><pre>
+#task3
+import numpy as np
+<a name="0"></a><font color="#FF0000"><a href="match0-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_36.gif"/></a>
+
+    def insert(self, value):
+        if self.size == self.capacity:
+            print("Heap is full")
+            return
+        self.heap[self.size] = value
+        self._swim(self.size)
+        self.size += 1
+
+    def _swim(self, index):
+        while index &gt; 0 and self.heap[index] &lt; self.heap[self._parent(index)]:
+            self._swap(index, self._parent(index))
+            index = self._parent(index)
+
+    def _parent(self, index):
+        return (index - 1) // 2
+
+    def extractMin(self):
+        if self.size == 0:
+            raise IndexError("Heap is empty")
+        min_val = self.heap[0]
+        self._swap(0, self.size - 1)
+        self.size -= 1
+        self._heapify(0)
+        return min_val
+
+    def _heapify(self, index):
+        smallest = index
+        left = 2 * index + 1
+        right = 2 * index + 2
+
+        if left &lt; self.size and self.heap[left] &lt; self.heap[smallest]:
+            smallest = left
+        if right &lt; self.size and self.heap[right] &lt; self.heap[smallest]:
+            smallest = right
+
+        if smallest != index:
+            self._swap(index, smallest)
+            self._heapify(smallest)
+
+    def _swap(self, i, j):
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+</font>    def distribute_tasks(tasks, m):
+<a name="4"></a><font color="#FF00FF"><a href="match0-0.html#4" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_4.gif"/></a>
+
+        heap = MinHeap(m)  
+        for i in range(m):
+            heap.insert(0)
+
+        for j in tasks:
+            min_load = heap.extractMin()
+            new_load = min_load + j
+            heap.insert(new_load)
+
+        final_loads = np.zeros(m, dtype=int)
+</font>        for i in range(m):
+            final_loads[i] = heap.extractMin()
+
+        return final_loads
+
+tasks = [2, 4, 7, 1, 6]
+m = 4
+output = distribute_tasks(tasks, m)
+print(output)
+
+
+#task4
+
+<a name="2"></a><font color="#0000FF"><a href="match0-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_12.gif"/></a>
+
+    def insert(self, value):
+        if self.size == self.capacity:
+            print("Heap is full")
+            return
+        self.heap[self.size] = value
+        self._swim(self.size)
+        self.size += 1
+
+    def _swim(self, index):
+        while index &gt; 0 and self.heap[index] &gt; self.heap[self._parent(index)]:
+            self._swap(index, self._parent(index))
+            index = self._parent(index)
+
+    def _parent(self, index):
+</font>        return (index - 1) // 2
+
+<a name="3"></a><font color="#00FFFF"><a href="match0-0.html#3" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_6.gif"/></a>
+
+    def extractMax(self):
+        if self.size == 0:
+            raise IndexError("Heap is empty")
+        max_val = self.heap[0]
+        self._swap(0, self.size - 1)
+        self.size -= 1
+        self._heapify(0)
+        return max_val
+
+</font><a name="1"></a><font color="#00FF00"><a href="match0-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_16.gif"/></a>
+
+    def _heapify(self, index):
+        largest = index
+        left = 2 * index + 1
+        right = 2 * index + 2
+
+        if left &lt; self.size and self.heap[left] &gt; self.heap[largest]:
+            largest = left
+        if right &lt; self.size and self.heap[right] &gt; self.heap[largest]:
+            largest = right
+
+        if largest != index:
+            self._swap(index, largest)
+            self._heapify(largest)
+
+    def _swap(self, i, j):
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+</font>
+    def findTopKLargest(nums, k):
+        heap = MaxHeap(len(nums))
+
+        for num in nums:
+            heap.insert(num)
+
+        result = np.zeros(k, dtype=int)
+
+        for i in range(k):
+            result[i] = heap.extractMax()
+
+        return result
+
+    nums = np.array([4, 10, 2, 8, 6, 7])
+    k = 3
+    top_k = findTopKLargest(nums, k)
+    print(top_k) </pre>
+</body>
+</html>

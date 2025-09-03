@@ -1,0 +1,206 @@
+<html>
+<head>
+<title>A8_Sec07_21301185_Fariha-Feroz.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec07_21301185_Fariha-Feroz.txt<p></p><pre>
+﻿#TASK-3
+from array import array
+def mk(n, v=0):
+    return array('i', (v for _ in range(n)))
+def fmt(a):
+    s = "["
+    i = 0
+    m = len(a)
+    while i &lt; m:
+        s += str(a[i])
+        if i + 1 &lt; m:
+            s += ", "
+        i += 1
+    s += "]"
+    return s
+class Hmin:
+    def __init__(self, c):
+        self.__a = mk(c, 0)
+        self.__n = 0
+<a name="0"></a><font color="#FF0000"><a href="match131-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_7.gif"/></a>
+
+        self.__c = c
+    def _p(self, i): return (i - 1) // 2
+    def _l(self, i): return 2 * i + 1
+    def _r(self, i): return 2 * i + 2
+    def _sw(self, i, j):
+        t = self.__a[i]
+        self.__a[i] = self.__a[j]
+        self.__a[j] = t
+    def insert(self, x):
+</font>        if self.__n &gt;= self.__c:
+            raise IndexError("full")
+        i = self.__n
+        self.__a[i] = x
+        self.__n += 1
+        self.swim(i)
+    def swim(self, i):
+<a name="2"></a><font color="#0000FF"><a href="match131-1.html#2" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_3.gif"/></a>
+
+        while i &gt; 0:
+            p = self._p(i)
+            if self.__a[p] &lt;= self.__a[i]:
+                break
+            self._sw(i, p)
+            i = p
+    def extractMin(self):
+</font>        if self.__n == 0:
+            raise IndexError("empty")
+        x = self.__a[0]
+        self.__n -= 1
+        self.__a[0] = self.__a[self.__n]
+        self.sink(0)
+        return x
+    def sink(self, i):
+        while True:
+            l = self._l(i)
+            if l &gt;= self.__n:
+                break
+            r = self._r(i)
+            if r &lt; self.__n:
+                if self.__a[r] &lt;= self.__a[l]:
+                    ch = r
+                else:
+                    ch = l
+            else:
+                ch = l
+            if self.__a[i] &lt;= self.__a[ch]:
+                break
+            self._sw(i, ch)
+            i = ch
+    def view(self):
+        out = mk(self.__n, 0)
+        i = 0
+        while i &lt; self.__n:
+            out[i] = self.__a[i]
+            i += 1
+        return out
+def t3(ts, m):
+    # 3(1)
+    h = Hmin(m)
+    i = 0
+    while i &lt; m:
+        h.insert(0)
+        i += 1
+    for x in ts:
+        # 3(2)
+        y = h.extractMin()
+        # 3(3)
+        y = y + int(x)
+        # 3(4)
+        h.insert(y)
+    # 3(5)
+    return h.view()
+ts = (2, 4, 7, 1, 6)
+m = 4
+h = Hmin(m)
+i = 0
+while i &lt; m:
+    h.insert(0)
+    i += 1
+# 3(1)
+y = h.extractMin(); h.insert(y + ts[0]); print("3(1):", fmt(h.view()))
+# 3(2)
+y = h.extractMin(); h.insert(y + ts[1]); print("3(2):", fmt(h.view()))
+# 3(3)
+y = h.extractMin(); h.insert(y + ts[2]); print("3(3):", fmt(h.view()))
+# 3(4)
+y = h.extractMin(); h.insert(y + ts[3]); print("3(4):", fmt(h.view()))
+# 3(5)
+y = h.extractMin(); h.insert(y + ts[4]); print("3(5):", fmt(h.view()))
+
+
+
+
+#T-4
+
+
+class Hmax:
+    def __init__(self, c):
+        self.__a = mk(c, 0)
+        self.__n = 0
+        self.__c = c
+<a name="1"></a><font color="#00FF00"><a href="match131-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_6.gif"/></a>
+
+    def _p(self, i): return (i - 1) // 2
+    def _l(self, i): return 2 * i + 1
+    def _r(self, i): return 2 * i + 2
+    def _sw(self, i, j):
+        t = self.__a[i]
+        self.__a[i] = self.__a[j]
+        self.__a[j] = t
+    def insert(self, x):
+</font>        if self.__n &gt;= self.__c:
+            raise IndexError("full")
+        i = self.__n
+        self.__a[i] = x
+        self.__n += 1
+        self.swim(i)
+    def swim(self, i):
+<a name="3"></a><font color="#00FFFF"><a href="match131-1.html#3" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_3_3.gif"/></a>
+
+        while i &gt; 0:
+            p = self._p(i)
+            if self.__a[p] &gt;= self.__a[i]:
+                break
+            self._sw(i, p)
+            i = p
+    def extractMax(self):
+</font><a name="5"></a><font color="#FF0000"><a href="match131-1.html#5" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_2.gif"/></a>
+
+        if self.__n == 0:
+            raise IndexError("empty")
+        x = self.__a[0]
+        self.__n -= 1
+</font>        self.__a[0] = self.__a[self.__n]
+        self.sink(0)
+        return x
+    def sink(self, i):
+        while True:
+            l = self._l(i)
+            if l &gt;= self.__n:
+                break
+<a name="4"></a><font color="#FF00FF"><a href="match131-1.html#4" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_4_3.gif"/></a>
+
+            r = self._r(i)
+            ch = l
+            if r &lt; self.__n and self.__a[r] &gt; self.__a[l]:
+                ch = r
+            if self.__a[i] &gt;= self.__a[ch]:
+</font>                break
+            self._sw(i, ch)
+            i = ch
+def t4(ns, k):
+    # 4(1)
+    n = 0
+    for _ in ns:
+        n += 1
+    a = mk(n, 0)
+    i = 0
+    for v in ns:
+        a[i] = int(v)
+        i += 1
+    h = Hmax(n)
+    j = 0
+    while j &lt; n:
+        h.insert(a[j])
+        j += 1
+    out = mk(k, 0)
+    t = 0
+    while t &lt; k:
+        out[t] = h.extractMax()
+        t += 1
+    return out
+# 4(1)
+ns = (4, 10, 2, 8, 6, 7)
+k = 3
+print("4(1):", fmt(t4(ns, k)))</pre>
+</body>
+</html>

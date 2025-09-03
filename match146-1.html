@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>A8_Sec25_22301255_Sakibul-Bashar-Khadem.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+[WRONG-TYPE]A8_Sec03_23301618_SUMAIYA-AZIM-MIM_.txt<p></p><pre>
+#Task03
+class MinHeap:
+    def __init__(self, count):
+        self.heap = [0] *count
+        self.count =count
+        self.size = count      
+
+    def heapify_down(self, i):
+        smallest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+<a name="2"></a><font color="#0000FF"><a href="match146-0.html#2" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_2_12.gif"/></a>
+
+        if left &lt; self.size and self.heap[left] &lt; self.heap[smallest]:
+            smallest = left
+        if right &lt; self.size and self.heap[right] &lt; self.heap[smallest]:
+            smallest = right
+        if smallest != i:
+            self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
+</font>            self.heapify_down(smallest)
+
+<a name="0"></a><font color="#FF0000"><a href="match146-0.html#0" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_19.gif"/></a>
+
+    def heapify_up(self, i):
+        while i &gt; 0:
+            parent = (i - 1) // 2
+            if self.heap[i] &lt; self.heap[parent]:
+                self.heap[i], self.heap[parent] = self.heap[parent], self.heap[i]
+                i = parent
+            else:
+                break
+
+    def extract_min(self):
+        if self.size == 0:
+            return None
+        root = self.heap[0]
+        self.heap[0] = self.heap[self.size - 1]
+        self.size -= 1
+        self.heapify_down(0)
+        return root
+
+    def insert(self, val):
+</font>        if self.size &lt; self.count:
+            self.heap[self.size] = val
+            self.size += 1
+            self.heapify_up(self.size - 1)
+        else:
+            raise Exception("Heap is full")
+
+    def distribute_tasks(tasks,x):
+     heap = MinHeap  
+     for task in tasks:
+        min_load = heap.extract_min()
+        new_load = min_load + task
+        heap.insert(new_load)
+     return heap.heap
+
+
+
+
+
+
+#Task04
+class MaxHeap:
+    def __init__(self, arr):
+        self.heap = [0] * len(arr)  
+        self.size = len(arr)  
+        for i in range(self.size):
+            self.heap[i] = arr[i]
+        self.build_heap()
+
+    def build_heap(self):
+        start = (self.size // 2) - 1
+        for i in range(start, -1, -1):
+            self.heapify_down(i)
+
+    def heapify_down(self, i):
+        while True:
+            largest = i
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+<a name="1"></a><font color="#00FF00"><a href="match146-0.html#1" target="0"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_12.gif"/></a>
+
+            if left &lt; self.size and self.heap[left] &gt; self.heap[largest]:
+                largest = left
+            if right &lt; self.size and self.heap[right] &gt; self.heap[largest]:
+                largest = right
+
+            if largest != i:
+                self.heap[i], self.heap[largest] = self.heap[largest], self.heap[i]
+</font>                i = largest
+            else:
+                break
+
+    def extract_max(self):
+     if self.size == 0:
+        return None
+     root = self.heap[0]
+     last_index = self.size - 1
+     self.heap[0] = self.heap[last_index]
+     self.size = self.size - 1
+     self.heapify_down(0)
+     return root
+
+    def top_k_largest(nums, k):
+     max_heap = MaxHeap(nums)
+     result = [0] * k
+     while i &lt; k:
+        result[i] = max_heap.extract_max()
+        i = i + 1
+     return result
+
+ 
+</pre>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>A8_Sec01_21201403_Tahsin-Ahmed-Chowdhury.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec01_21201403_Tahsin-Ahmed-Chowdhury.txt<p></p><pre>
+﻿Task 3:
+<a name="1"></a><font color="#00FF00"><a href="match14-1.html#1" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_1_22.gif"/></a>
+
+def distribute_tasks(tasks, m):
+ if m == 0:
+   return np.array([], dtype=int)
+ tasks_array = np.array(tasks, dtype=int)
+ machine_loads = MinHeap(m)
+ for i in range(m):
+   machine_loads.insert(0)
+
+
+ for task in tasks_array:
+   min_load = machine_loads.extract_min()
+   if min_load is not None:
+     machine_loads.insert(min_load + task)
+
+
+ final_loads = np.zeros(machine_loads._size, dtype=int)
+ for i in range(machine_loads._size):
+   final_loads[i] = machine_loads.extract_min()
+
+
+ return final_loads
+
+
+tasks = np.array([2, 4, 7, 1, 6], dtype=int)
+m = 4
+result = distribute_tasks(tasks, m)
+print("Final machine loads:", result)
+</font>
+
+def distribute_tasks(tasks, m):
+
+
+   loads = [0] * m
+
+
+
+
+   for task in tasks:
+
+
+       mini_index = 0
+       for i in range(1, m):
+           if loads[i] &lt; loads[mini_index]:
+               mini_index = i
+
+
+       loads[mini_index] += task
+
+
+
+
+   return loads
+
+
+
+
+tasks = [2, 4, 7, 1, 6]
+m = 4
+
+
+
+
+result = distribute_tasks(tasks, m)
+print(result)
+
+
+Task 4:
+<a name="0"></a><font color="#FF0000"><a href="match14-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_59.gif"/></a>
+
+import numpy as np
+class MaxHeap:
+ def __init__(self, nums, capacity):
+   self._heap = np.zeros(capacity, dtype=int)
+   self._size = len(nums)
+   for i in range(self._size):
+     self._heap[i] = nums[i]
+   self._build_max_heap()
+
+
+ def _swap(self, i, j):
+   self._heap[i], self._heap[j] = self._heap[j], self._heap[i]
+
+
+ def _heapify(self, index):
+   largest = index
+   left = 2 * index + 1
+   right = 2 * index + 2
+   if left &lt; self._size and self._heap[left] &gt; self._heap[largest]:
+     largest = left
+   if right &lt; self._size and self._heap[right] &gt; self._heap[largest]:
+     largest = right
+   if largest != index:
+     self._swap(index, largest)
+     self._heapify(largest)
+
+
+ def _build_max_heap(self):
+   for i in range(self._size // 2 - 1, -1, -1):
+     self._heapify(i)
+
+
+ def extract_max(self):
+   if self._size == 0:
+     return None
+   max_element = self._heap[0]
+   self._heap[0] = self._heap[self._size - 1]
+   self._size -= 1
+   self._heapify(0)
+   return max_element
+
+
+def find_top_k_largest(nums, k):
+ capacity = len(nums)
+ max_heap = MaxHeap(nums, capacity)
+ result = np.zeros(k, dtype=int)
+ for i in range(k):
+   max_val = max_heap.extract_max()
+   if max_val is None:
+     break
+   result[i] = max_val
+ return result
+
+
+nums = np.array([4, 10, 2, 8, 6, 7])
+k = 3
+result = find_top_k_largest(nums, k)
+</font>print("Top k largest elements:", result)</pre>
+</body>
+</html>

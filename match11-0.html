@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>A8_Sec03_23201252_Fariya-Rahman-Richi---FARIYA-RAHMAN-RICHI.txt</title>
+</head>
+<body bgcolor="white">
+<hr/>
+A8_Sec03_23201252_Fariya-Rahman-Richi---FARIYA-RAHMAN-RICHI.txt<p></p><pre>
+Assignment 8 Task 4:
+<a name="0"></a><font color="#FF0000"><a href="match11-1.html#0" target="1"><img align="left" alt="other" border="0" src="http://moss.stanford.edu/bitmaps/tm_0_97.gif"/></a>
+
+class MaxHeap:
+  def __init__ (self,load):
+    self.__heap=[0]*load
+    self.__size=0
+    self.__load=load
+  def insert(self,value):
+    if self.__size==self.__load:
+      return False
+    self.__heap[self.__size]=value
+    self.__size+=1
+    self.__swim(self.__size-1)
+    return True
+  def __swim(self,idx):
+    var=(idx-1)//2
+    while idx&gt;0 and self.__heap[idx] &gt; self.__heap[var]:
+      a=self.__heap[var]
+      self.__heap[var]=self.__heap[idx]
+      self.__heap[idx]=a
+      idx=var
+      var=(idx-1)//2
+
+  def extractMax(self):
+    if self.__size==0:
+      return None
+    max=self.__heap[0]
+    self.__heap[0]=self.__heap[self.__size-1]
+    self.__size-=1
+
+    self.__sink(0)   
+    return max
+
+  def __sink(self, idx):
+    while True:
+      left=2 * idx + 1
+      right=2 * idx + 2
+      large=idx
+
+      if left&lt;self.__size and self.__heap[left]&gt;self.__heap[large]:
+        large=left
+      if right&lt;self.__size and self.__heap[right]&gt;self.__heap[large]:
+        large=right
+
+      if large!=idx:
+        a=self.__heap[idx]
+        self.__heap[idx]=self.__heap[large]
+        self.__heap[large]=a
+        idx=large
+      else:
+        break
+    
+  def Heap(self):
+    arr=[0]*self.__size
+    for i in range(self.__size):
+      arr[i]=self.__heap[i]
+    return arr
+
+def top_k_largest(nums, k):
+  maxHeap=MaxHeap(len(nums))
+  for j in nums:
+    maxHeap.insert(j)
+  result=[0]*k 
+  for i in range(k):
+    result[i]=maxHeap.extractMax()
+  return result
+
+
+if __name__ == "__main__":
+  nums=[4, 10, 2, 8, 6, 7]
+  k=3
+  result=top_k_largest(nums, k)
+
+  print("[", end="")
+  for i in range(len(result)):
+    print(result[i], end="")
+    if i&lt;len(result) - 1:
+      print(", ", end="")
+</font>  print("]")
+</pre>
+</body>
+</html>
